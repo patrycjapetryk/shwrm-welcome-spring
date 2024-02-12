@@ -1,24 +1,46 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import './style.css';
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+// header position
+const header = document.querySelector('.main-header--js');
 
-setupCounter(document.querySelector('#counter'))
+const headerPosition = () => {
+  if (window.pageYOffset > header.offsetTop) {
+    header.classList.add('main-header--hide');
+  } else {
+    header.classList.remove('main-header--hide');
+  }
+};
+
+// text on hover
+const description = document.querySelector('.description--js');
+const images = document.querySelectorAll('.gallery__item--js');
+
+const showText = (event) => (description.innerHTML = event.target.getAttribute('data-text'));
+const hideText = () => (description.innerHTML = '');
+
+images.forEach((item) => item.addEventListener('mouseenter', showText));
+images.forEach((item) => item.addEventListener('mouseleave', hideText));
+
+window.addEventListener('mousemove', (event) => {
+  description.style.left = event.clientX + 30 + 'px';
+  description.style.top = event.clientY + 'px';
+});
+
+// rotate image on scroll
+const turnImage = (itemClass, deg) => {
+  const scrollTop = window.scrollY;
+  document.querySelectorAll(itemClass).forEach((item) => {
+    const turnDegrees = parseInt(item.getAttribute('data-turn'));
+    if (scrollTop < item.offsetTop - window.innerHeight / 2) {
+      item.style.transform = 'rotate(' + turnDegrees + 'deg)';
+    } else {
+      item.style.transform = 'rotate(' + (turnDegrees + deg) + 'deg)';
+    }
+  });
+};
+
+window.addEventListener('scroll', () => {
+  headerPosition();
+  turnImage('.gallery__item--turn-right-js', 6);
+  turnImage('.gallery__item--turn-left-js', -6);
+});
