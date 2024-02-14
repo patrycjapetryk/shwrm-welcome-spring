@@ -3,7 +3,7 @@
 
 # Welcome spring #shwrm
 
-Landing Page for Showroom.pl, an online fashion marketplace. It was built using Vanilla JS, SCSS, and Vite.
+Landing Page for Showroom.pl, an online fashion marketplace. It was built using Vanilla JS and Vite.
 
 - **Online version**: [Open live demo](https://shwrm-welcome-spring.netlify.app/)
 
